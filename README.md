@@ -1,64 +1,82 @@
-# Automatic Screen Rotation System
+# Automatic Screen Rotation Using AI
 
-A real-time face detection and head pose estimation system that provides intelligent screen rotation recommendations based on head orientation.
+This project automatically rotates your screen based on face orientation using AI. It combines YOLOv5 for face detection and a custom CNN model trained on the BIWI dataset for head pose estimation.
 
-## 🎯 Features
-
-- **Real-time Face Detection**: Uses YOLOv5 with optimized settings for accurate face detection
-- **Head Pose Estimation**: CNN model predicts yaw, pitch, and roll angles
-- **Smart Rotation Logic**: Determines optimal screen rotation based on head tilt
-- **Manual Rotation Guidance**: Provides step-by-step instructions for manual rotation
-- **Visual Feedback**: Real-time display of pose angles and recommendations
-- **Optimized Performance**: Enhanced preprocessing and fallback model support
+## � Features
+- Real-time face detection using YOLOv5
+- Head pose estimation (yaw, pitch, roll)
+- Automatic screen rotation based on face orientation
+- Cross-platform support (Windows and Linux)
+- Easy-to-use interface
+- Visual feedback with real-time angle display
+- Support for both automatic and manual rotation
+- Optimized for performance with GPU acceleration
 
 ## 📁 Project Structure
-
 ```
-auto_screen_rotation/
-├── main_final.py                    # Final optimized system (RECOMMENDED)
-├── main_with_manual_rotation.py     # Manual rotation system
-├── main.py                         # Original system (automatic rotation)
-├── scripts/                        # Core components
-│   ├── predict_pose.py             # Head pose estimation
-│   ├── utils.py                    # Screen rotation utilities
-│   ├── data_loader.py              # BIWI dataset loader
-│   └── train_pose_model.py         # Model training script
-├── models/                         # Pre-trained models
-│   ├── head_pose_cnn.pth           # Head pose CNN model
-│   └── yolov5_face.pt              # YOLOv5 face detection model
-├── dataset/                        # BIWI dataset (for training)
-├── requirements.txt                # Python dependencies
-├── README.md                       # This file
-├── SOLUTION_SUMMARY.md             # Screen rotation issue solution
-└── SCREEN_ROTATION_TROUBLESHOOTING.md # Troubleshooting guide
+├── main_simple_rotation.py    # Main script for Windows
+├── linux_screen_rotation_simple.py  # Main script for Linux
+├── scripts/
+│   ├── data_loader.py        # Dataset loading utilities
+│   ├── predict_pose.py       # Head pose prediction
+│   ├── screen_rotator.py     # Screen rotation logic
+│   ├── train_pose_model.py   # Model training script
+│   └── utils.py             # Utility functions
+├── models/
+│   ├── head_pose_cnn.pth    # Head pose model weights
+│   └── yolov5_face.pt       # YOLOv5 face detection model
+└── requirements.txt         # Python dependencies
 ```
 
-## 🚀 Quick Start
-
-### Prerequisites
-- Windows 10/11
-- Python 3.8+
+## �️ System Requirements
+- Python 3.10 or higher
 - Webcam
-- Virtual environment (recommended)
+- NVIDIA GPU (recommended for better performance)
+- Operating System: Windows 10/11 or Linux
 
-### Installation
+## 📦 Installation
 
-1. **Clone or download the project**
-2. **Create and activate virtual environment:**
-   ```bash
-   python -m venv venv
-   venv\Scripts\activate
-   ```
+1. Clone the repository:
+```bash
+git clone https://github.com/shreeprasaddas/Automatic_Screen_Rotation_Using_AI.git
+cd Automatic_Screen_Rotation_Using_AI
+```
 
-3. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+2. Create and activate virtual environment:
+```bash
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# Linux
+source venv/bin/activate
+```
 
-4. **Run the optimized system:**
-   ```bash
-   python main_final.py
-   ```
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+4. Download model weights:
+- Place YOLOv5 face detection model (`yolov5_face.pt`) in the `models` folder
+- Train or download head pose estimation model (`head_pose_cnn.pth`) to the `models` folder
+
+## 🚀 Usage
+
+### For Windows Users:
+```bash
+python main_simple_rotation.py
+```
+
+### For Linux Users:
+```bash
+python linux_screen_rotation_simple.py
+```
+
+### Training Custom Model (Optional):
+If you want to train your own head pose model:
+```bash
+python scripts/train_pose_model.py
+```
 
 ## 🎮 Controls
 
@@ -69,78 +87,18 @@ auto_screen_rotation/
 - **'t'**: Show threshold adjustment info
 
 ## ⚙️ Configuration
+- Default rotation thresholds:
+  - Pitch > 25° : Portrait mode
+  - Pitch < -25° : Reverse portrait
+  - Yaw > 25° : Landscape
+  - Yaw < -25° : Reverse landscape
 
-### Face Detection Settings
-- **Confidence Threshold**: 0.25 (adjustable in code)
-- **Model**: Custom YOLOv5 face model with fallback options
-- **Frame Size**: 1280x720
-- **FPS**: 30
+## 🤝 Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-### Rotation Thresholds
-- **Roll Threshold**: 15° (head tilt left/right)
-- **Pitch Threshold**: 12° (head up/down)
-- **Lower values**: More sensitive to head movement
-- **Higher values**: Less sensitive to head movement
+## � License
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🔧 Troubleshooting
-
-### Face Detection Issues
-1. **No face detected**: 
-   - Ensure good lighting
-   - Face the camera directly
-   - Check webcam permissions
-   - Try adjusting confidence threshold
-
-2. **Poor detection quality**:
-   - Clean webcam lens
-   - Improve lighting conditions
-   - Move closer to camera
-   - Check for background interference
-
-### Screen Rotation Issues
-- **Manual rotation only**: Your system doesn't support automatic rotation
-- **Follow on-screen instructions**: Use Windows display settings
-- **Keyboard shortcuts**: Try Ctrl + Alt + arrow keys
-
-## 📊 Performance
-
-The optimized system provides:
-- **High face detection accuracy** (470+ detections in testing)
-- **Real-time processing** (30 FPS)
-- **Robust fallback options** (multiple YOLOv5 models)
-- **Enhanced preprocessing** (brightness/contrast adjustment)
-
-## 🎯 How It Works
-
-1. **Face Detection**: YOLOv5 detects faces in real-time
-2. **Pose Estimation**: CNN model predicts head orientation angles
-3. **Rotation Logic**: Determines optimal screen rotation based on thresholds
-4. **Manual Guidance**: Provides step-by-step rotation instructions
-5. **Visual Feedback**: Shows real-time pose angles and recommendations
-
-## 🔄 Rotation Logic
-
-- **Roll > 15°**: Rotate to 270° (portrait flipped)
-- **Roll < -15°**: Rotate to 90° (portrait)
-- **Pitch > 12°**: Rotate to 180° (landscape flipped)
-- **Pitch < -12°**: Rotate to 0° (landscape)
-- **Default**: 0° (landscape)
-
-## 📝 Notes
-
-- **Manual Rotation Required**: Automatic screen rotation may not work on all systems
-- **Windows Only**: Screen rotation functionality is Windows-specific
-- **Webcam Required**: System needs access to webcam for face detection
-- **Lighting Important**: Good lighting improves face detection accuracy
-
-## 🤝 Support
-
-For issues and troubleshooting:
-1. Check `SCREEN_ROTATION_TROUBLESHOOTING.md`
-2. Review `SOLUTION_SUMMARY.md`
-3. Ensure all dependencies are installed
-4. Verify Windows compatibility
-
-## 📄 License
-
-This project is for educational and research purposes.
+## 🙏 Acknowledgments
+- YOLOv5 Face Detection from [yolov5-face](https://github.com/deepcam-cn/yolov5-face)
+- BIWI Dataset for head pose estimation
