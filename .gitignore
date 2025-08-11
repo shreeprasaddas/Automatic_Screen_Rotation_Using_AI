@@ -1,0 +1,26 @@
+# Dataset folders
+dataset/
+.env/
+.venv/
+venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# VS Code settings
+.vscode/
+
+# Environment variables
+.env
+.env.local
+
+# Large model files
+*.pt
+*.pth
