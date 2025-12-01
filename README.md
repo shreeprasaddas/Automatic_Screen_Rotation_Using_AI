@@ -1,4 +1,4 @@
-# Automatic Screen Rotation Using AI
+# Automatic Screen Rotation Using YOLOv5
 
 This project automatically rotates your screen based on face orientation using AI. It combines YOLOv5 for face detection and a custom CNN model trained on the BIWI dataset for head pose estimation.
 
